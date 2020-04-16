@@ -36,7 +36,9 @@ class FacialKeypointsDataset(Dataset):
         if(image.shape[2] == 4):
             image = image[:,:,0:3]
         
-        key_pts = self.key_pts_frame.iloc[idx, 1:].as_matrix()
+        key_pts = (self.key_pts_frame.iloc[idx, 1:]).to_numpy()
+        print(key_pts.shape)
+        key_pts = key_pts.reshape((int(len(key_pts)/2), 2))
         key_pts = key_pts.astype('float').reshape(-1, 2)
         sample = {'image': image, 'keypoints': key_pts}
 
@@ -75,7 +77,6 @@ class Normalize(object):
 
 class Rescale(object):
     """Rescale the image in a sample to a given size.
-
     Args:
         output_size (tuple or int): Desired output size. If tuple, output is
             matched to output_size. If int, smaller of image edges is matched
@@ -110,7 +111,6 @@ class Rescale(object):
 
 class RandomCrop(object):
     """Crop randomly the image in a sample.
-
     Args:
         output_size (tuple or int): Desired output size. If int, square crop
             is made.
