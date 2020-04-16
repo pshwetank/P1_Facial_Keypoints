@@ -37,7 +37,7 @@ class FacialKeypointsDataset(Dataset):
             image = image[:,:,0:3]
         
         key_pts = (self.key_pts_frame.iloc[idx, 1:]).to_numpy()
-        print(key_pts.shape)
+        #print(key_pts.shape)
         key_pts = key_pts.reshape((int(len(key_pts)/2), 2))
         key_pts = key_pts.astype('float').reshape(-1, 2)
         sample = {'image': image, 'keypoints': key_pts}
